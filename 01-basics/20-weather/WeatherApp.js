@@ -4,44 +4,80 @@ import { getWeatherData, WeatherConditionIcons } from './weather.service.ts'
 export default defineComponent({
   name: 'WeatherApp',
 
+  setup() {
+    function kelvinToCelsius(kelvin) {
+      const celsius = kelvin - 273.15;
+      return celsius.toFixed(1) + ' °C';
+    }
+
+    function isNightTime(dt, sunrise, sunset) {
+      const [dtHours, dtMins] = dt.split(':').map(Number);
+      const dtInMinutes = dtHours * 60 + dtMins;
+
+      const [sunriseHours, sunriseMins] = sunrise.split(':').map(Number);
+      const sunriseInMinutes = sunriseHours * 60 + sunriseMins;
+
+      const [sunsetHours, sunsetMins] = sunset.split(':').map(Number);
+      const sunsetInMinutes = sunsetHours * 60 + sunsetMins;
+
+      return dtInMinutes < sunriseInMinutes || dtInMinutes > sunsetInMinutes;
+    }
+
+    function hPaToMmHg(hPa) {
+      const mmHg = hPa * 0.750062;
+      return Math.round(mmHg);
+    }
+
+    return {
+      weatherData: getWeatherData(),
+      weatherConditionIcons: WeatherConditionIcons,
+      kelvinToCelsius,
+      isNightTime,
+      hPaToMmHg
+    }
+  },
+
   template: `
     <div>
       <h1 class="title">Погода в Средиземье</h1>
 
       <ul class="weather-list unstyled-list">
-        <li class="weather-card weather-card--night">
-          <div class="weather-alert">
+        <li v-for="weather in weatherData"
+            class="weather-card"
+            :class="{ 'weather-card--night': isNightTime(weather.current.dt, weather.current.sunrise, weather.current.sunset) }"
+        >
+          <div v-if="weather.alert" class="weather-alert">
             <span class="weather-alert__icon">⚠️</span>
-            <span class="weather-alert__description">Королевская метеослужба короля Арагорна II: Предвещается наступление сильного шторма.</span>
+            <span class="weather-alert__description">{{ weather.alert.sender_name }}: {{ weather.alert.description }}</span>
           </div>
           <div>
             <h2 class="weather-card__name">
-              Гондор
+              {{ weather.geographic_name }}
             </h2>
             <div class="weather-card__time">
-              07:17
+              {{ weather.current.dt }}
             </div>
           </div>
           <div class="weather-conditions">
-            <div class="weather-conditions__icon" title="thunderstorm with heavy rain">⛈️</div>
-            <div class="weather-conditions__temp">15.0 °C</div>
+            <div class="weather-conditions__icon" :title="weather.current.weather.description">{{ weatherConditionIcons[weather.current.weather.id] }}</div>
+            <div class="weather-conditions__temp">{{ kelvinToCelsius(weather.current.temp) }}</div>
           </div>
           <div class="weather-details">
             <div class="weather-details__item">
               <div class="weather-details__item-label">Давление, мм рт. ст.</div>
-              <div class="weather-details__item-value">754</div>
+              <div class="weather-details__item-value">{{ hPaToMmHg(weather.current.pressure) }}</div>
             </div>
             <div class="weather-details__item">
               <div class="weather-details__item-label">Влажность, %</div>
-              <div class="weather-details__item-value">90</div>
+              <div class="weather-details__item-value">{{ weather.current.humidity }}</div>
             </div>
             <div class="weather-details__item">
               <div class="weather-details__item-label">Облачность, %</div>
-              <div class="weather-details__item-value">100</div>
+              <div class="weather-details__item-value">{{ weather.current.clouds }}</div>
             </div>
             <div class="weather-details__item">
               <div class="weather-details__item-label">Ветер, м/с</div>
-              <div class="weather-details__item-value">10.5</div>
+              <div class="weather-details__item-value">{{ weather.current.wind_speed }}</div>
             </div>
           </div>
         </li>
