@@ -13,6 +13,11 @@ export default defineComponent({
       type: Array,
       required: true,
     },
+
+    removeEmailByIndex: {
+      type: Function,
+      required: true,
+    }
   },
 
   template: `
@@ -22,6 +27,7 @@ export default defineComponent({
         :key="email"
         :email="email"
         :marked="isMarked"
+        @email-removed="removeEmailByIndex(index)"
       />
     </ul>
   `,
