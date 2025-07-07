@@ -4,11 +4,10 @@ export default defineComponent({
   name: 'UiClock',
 
   setup() {
-    const getCurrentTime = () => new Date().toLocaleTimeString('en-US', {timeStyle: 'medium'});
+    const getCurrentTime = () => new Date().toLocaleTimeString(navigator.language, {timeStyle: 'medium'});
 
     let time = ref(getCurrentTime());
     let timerId = null;
-
 
     onMounted(() => {
       timerId = setInterval(() => {
