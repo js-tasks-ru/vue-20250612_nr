@@ -39,9 +39,9 @@ export default defineComponent({
     const filteredEmails = computed(() => {
       const result = [];
 
-      unfilteredEmails.value.filter((email) => {
+      for (const email of unfilteredEmails.value) {
         result.push({ value: email, isMarked: search.value.length > 0 && email.includes(search.value) });
-      })
+      }
 
       return result;
     })
