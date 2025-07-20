@@ -11,16 +11,7 @@ export default defineComponent({
     }
 
     function isNightTime(dt, sunrise, sunset) {
-      const [dtHours, dtMins] = dt.split(':').map(Number);
-      const dtInMinutes = dtHours * 60 + dtMins;
-
-      const [sunriseHours, sunriseMins] = sunrise.split(':').map(Number);
-      const sunriseInMinutes = sunriseHours * 60 + sunriseMins;
-
-      const [sunsetHours, sunsetMins] = sunset.split(':').map(Number);
-      const sunsetInMinutes = sunsetHours * 60 + sunsetMins;
-
-      return dtInMinutes < sunriseInMinutes || dtInMinutes > sunsetInMinutes;
+      return dt < sunrise || dt > sunset;
     }
 
     function hPaToMmHg(hPa) {

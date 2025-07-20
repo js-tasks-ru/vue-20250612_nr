@@ -10,15 +10,15 @@ import UiStretch from './UiStretch.vue'
       </UiStretch>
 
       <UiStretch class="sample">
-        <img src="https://picsum.photos/400/300" alt="" />
+        <img src="https://bkacontent.com/wp-content/uploads/2016/06/Depositphotos_31146757_l-2015.jpg" alt="" />
       </UiStretch>
 
       <UiStretch class="sample">
-        <img src="https://picsum.photos/200/200" alt="" />
+        <img src="https://images.ctfassets.net/hrltx12pl8hq/28ECAQiPJZ78hxatLTa7Ts/2f695d869736ae3b0de3e56ceaca3958/free-nature-images.jpg?fit=fill&w=1200&h=630" alt="" />
       </UiStretch>
 
       <UiStretch class="sample">
-        <img src="https://picsum.photos/300/400" alt="" />
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRnVnfNewMSK5t5IZL_Bunq1z124yzRHnF5Pg&s" alt="" />
       </UiStretch>
 
       <UiStretch class="sample">
