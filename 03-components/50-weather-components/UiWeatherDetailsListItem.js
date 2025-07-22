@@ -10,7 +10,7 @@ export default defineComponent({
     },
 
     value: {
-      type: String,
+      type: Number,
       required: true
     }
   },

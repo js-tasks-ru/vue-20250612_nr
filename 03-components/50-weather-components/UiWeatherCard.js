@@ -1,4 +1,4 @@
-import { defineComponent } from 'vue'
+import {computed, defineComponent} from 'vue'
 import { WeatherConditionIcons } from './weather.service.ts'
 import UiWeatherAlert from "./UiWeatherAlert.js";
 import UiWeatherConditions from "./UiWeatherConditions.js";
@@ -20,10 +20,10 @@ export default defineComponent({
     }
   },
 
-  setup() {
-    function isNightTime(dt, sunrise, sunset) {
-      return dt < sunrise || dt > sunset;
-    }
+  setup(props) {
+    const isNightTime = computed(() => {
+      return props.weather.current.dt < props.weather.current.sunrise || props.weather.current.dt > props.weather.current.sunset;
+    });
 
     function kelvinToCelsius(kelvin) {
       const celsius = kelvin - 273.15;
@@ -38,7 +38,7 @@ export default defineComponent({
   },
 
   template: `
-    <li class="weather-card" :class="{ 'weather-card--night': isNightTime(weather.current.dt, weather.current.sunrise, weather.current.sunset) }">
+    <li class="weather-card" :class="{ 'weather-card--night': isNightTime }">
       <UiWeatherAlert v-if="weather.alert">
         {{ weather.alert.sender_name }}: {{ weather.alert.description }}
       </UiWeatherAlert>
