@@ -4,12 +4,12 @@ defineProps<{
   options: { value: T; text: string }[];
 }>();
 
-const model = defineModel<T>({required: true});
+const modelValue = defineModel<T>({required: true});
 
 </script>
 
 <template>
-  <select v-model="model" class="select">
+  <select v-model="modelValue" class="select">
     <option v-for="{ text, value } in options" :key="text" :value="value">
       {{ text }}
     </option>

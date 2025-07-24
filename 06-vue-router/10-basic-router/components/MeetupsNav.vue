@@ -2,13 +2,13 @@
 
 <template>
   <nav class="nav">
-    <a href="/index" class="nav__link">Главная</a>
-    <a href="/foo" class="nav__link">Страница Foo</a>
-    <a href="/bar" class="nav__link">Страница Bar</a>
-    <a href="/login" class="nav__link">Вход</a>
-    <a href="/login?from=/foo" class="nav__link">Вход /login?from=/foo</a>
-    <a href="/login?from=/bar" class="nav__link">Вход /login?from=/bar</a>
-    <a href="/register" class="nav__link">Регистрация</a>
+    <router-link :to="{ name: 'index' }" class="nav__link">Главная</router-link>
+    <router-link :to="{ name: 'foo' }" class="nav__link">Страница Foo</router-link>
+    <router-link :to="{ name: 'bar' }" class="nav__link">Страница Bar</router-link>
+    <router-link :to="{ name: 'login' }" class="nav__link">Вход</router-link>
+    <router-link :to="{ name: 'login', query: { from: '/foo' }}" class="nav__link">Вход /login?from=/foo</router-link>
+    <router-link :to="{ name: 'login', query: { from: '/bar' }}"  class="nav__link">Вход /login?from=/bar</router-link>
+    <router-link :to="{ name: 'register' }" class="nav__link">Регистрация</router-link>
   </nav>
 </template>
 
